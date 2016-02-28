@@ -245,10 +245,11 @@ const styles = StyleSheet.create({
     fontFamily: 'avenir',
   },
   calendarContainer: {
-    marginTop: 100,
     alignSelf: 'stretch',
     marginLeft: 10,
     marginRight: 10,
+    marginTop: 10,
+    marginBottom: 5,
   },
   calendarTopContainer: {
     flexDirection: 'row',
