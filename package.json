@@ -4,7 +4,7 @@
   "description": "Pure javascript React Native calendar component that allows you to select a single date or a range of dates. Uses Moment.js to perform all date actions.",
   "author": {
     "name": "Jarred Witt",
-    "email" "me@jarredwitt.com"
+    "email": "me@jarredwitt.com"
   },
   "homepage": "https://github.com/jarredwitt/react-native-range-calendar",
   "bugs": "https://github.com/jarredwitt/react-native-range-calendar/issues",
