@@ -13,7 +13,7 @@
     "url": "https://github.com/jarredwitt/react-native-range-calendar.git"
   },
   "private": true,
-  "main": "calendar",
+  "main": "./calendar/calendar.js",
   "dependencies": {
     "moment": "^2.11.2",
     "react-native": "^0.20.0"
