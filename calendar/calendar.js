@@ -15,6 +15,7 @@ class Calendar extends Component {
     date: React.PropTypes.oneOfType([
       React.PropTypes.instanceOf(Date),
       React.PropTypes.instanceOf(moment),
+      React.PropTypes.object,
     ]),
     selectionType: React.PropTypes.oneOf([RANGE, SINGLE]),
     onDateChange: React.PropTypes.func,
@@ -30,11 +31,25 @@ class Calendar extends Component {
     super(props);
 
     this.isRange = props.selectionType === RANGE;
-    let selected = this.isRange ? { } : props.date;
+    let selected;
+    let year;
+    let month;
+    if (this.isRange){
+      selected = {
+        min: props.date.min,
+        max: props.date.max
+      };
+      year = props.date.max.year();
+      month = props.date.max.month();
+    } else {
+      selected = props.date;
+      year = props.date.year();
+      month = props.date.month();
+    }
 
     this.state = {
-      year: props.date.year(),
-      month: props.date.month(),
+      year,
+      month,
       selected,
     };
   }
@@ -81,17 +96,29 @@ class Calendar extends Component {
             {row.map((day, dayIndex) => this._buildCalendarDate(day, dayIndex))}
           </View>
         ))}
-    </View>
+        {this.isRange &&
+          <TouchableView onPress={this._handleClearRange} style={styles.clearRangeContainer}>
+            <Text style={styles.clearRangeText}>Clear Range</Text>
+          </TouchableView>
+        }
+      </View>
     );
   }
   _checkProps = (current, next) => {
     // We only check the date matches the initial date since that is the only prop
     // that would change on the re-render.
+    if (this.isRange) {
+      let update = current.date.min.isSame(next.date.min, 'day');
+      if (update) {
+        return true;
+      }
+
+      return current.date.max.isSame(next.date.max, 'day');
+    }
     return !current.date.isSame(next.date, 'day');
   };
   _checkState = (current, next) => {
     // State is a bit more tricky since we are dealing with moment objects. We need to an actual comparison of selected.
-
     if (current.year !== next.year) {
       return true;
     }
@@ -209,6 +236,12 @@ class Calendar extends Component {
       year,
     });
   };
+  _handleClearRange = () => {
+    selected = {};
+    this.setState({
+      selected,
+    });
+  };
   _handleDateChange = (date) => {
     let selected = date;
 
@@ -297,6 +330,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 1,
     padding: 1,
+  },
+  clearRangeContainer: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  clearRangeText: {
+    flex: 1,
+    fontFamily: 'avenir',
+    fontSize: 15,
+    color: '#B6B6B6'
   }
 });
 

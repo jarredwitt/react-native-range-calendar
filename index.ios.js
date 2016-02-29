@@ -5,6 +5,7 @@ import React, {
   Text,
   View
 } from 'react-native';
+import moment from 'moment';
 
 import Calendar from './calendar/calendar';
 
@@ -16,7 +17,7 @@ class CalendarRangePicker extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Calendar onDateChange={this._handleDateChange}/>
+        <Calendar selectionType="range" date={{ min: new moment().year(2016).month(1).date(3), max: new moment().year(2016).month(1).date(9)}}/>
       </View>
     );
   }
@@ -30,6 +31,7 @@ class CalendarRangePicker extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 100,
   }
 });
 
