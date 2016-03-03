@@ -16,7 +16,7 @@
   "main": "./calendar/calendar.js",
   "dependencies": {
     "moment": "^2.11.2",
-    "react-native": "^0.20.0"
+    "react-native": "^0.21.0"
   },
   "license": "MIT"
 }
