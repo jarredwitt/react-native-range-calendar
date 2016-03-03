@@ -266,7 +266,7 @@ class Calendar extends Component {
         this.setState({
           selected,
         });
-
+        this.props.onDateChange(selected);
         return;
       }
 
