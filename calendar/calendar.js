@@ -35,12 +35,18 @@ class Calendar extends Component {
     let year;
     let month;
     if (this.isRange){
-      selected = {
-        min: props.date.min,
-        max: props.date.max
-      };
-      year = props.date.max.year();
-      month = props.date.max.month();
+      if (!moment.isMoment(props.date) && props.date.min && props.date.max) {
+        selected = {
+          min: props.date.min,
+          max: props.date.max
+        };
+        year = props.date.max.year();
+        month = props.date.max.month();
+      } else {
+        selected = {};
+        year = moment().year();
+        month = moment().month();
+      }
     } else {
       selected = props.date;
       year = props.date.year();
@@ -107,7 +113,11 @@ class Calendar extends Component {
   _checkProps = (current, next) => {
     // We only check the date matches the initial date since that is the only prop
     // that would change on the re-render.
-    if (this.isRange) {
+    if (this.isRange && !moment.isMoment(current.date)) {
+      if (!current.date.min) {
+        return true;
+      }
+
       let update = current.date.min.isSame(next.date.min, 'day');
       if (update) {
         return true;
@@ -115,6 +125,7 @@ class Calendar extends Component {
 
       return current.date.max.isSame(next.date.max, 'day');
     }
+
     return !current.date.isSame(next.date, 'day');
   };
   _checkState = (current, next) => {
@@ -241,6 +252,7 @@ class Calendar extends Component {
     this.setState({
       selected,
     });
+    this.props.onDateChange(selected);
   };
   _handleDateChange = (date) => {
     let selected = date;
