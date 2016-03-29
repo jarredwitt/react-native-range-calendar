@@ -15,7 +15,7 @@
   "private": true,
   "main": "./calendar/calendar.js",
   "dependencies": {
-    "moment": "^2.11.2",
+    "moment": "^2.11.2"
   },
   "peerDependencies": {
     "react-native": "^0.22.0"
