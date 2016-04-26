@@ -18,12 +18,14 @@ class Calendar extends Component {
       React.PropTypes.object,
     ]),
     selectionType: React.PropTypes.oneOf([RANGE, SINGLE]),
+    onClose: React.PropTypes.func,
     onDateChange: React.PropTypes.func,
   };
 
   static defaultProps = {
     date: moment(),
     selectionType: SINGLE,
+    onClose: () => true,
     onDateChange: () => false,
   };
 
@@ -102,11 +104,16 @@ class Calendar extends Component {
             {row.map((day, dayIndex) => this._buildCalendarDate(day, dayIndex))}
           </View>
         ))}
-        {this.isRange &&
-          <TouchableView onPress={this._handleClearRange} style={styles.clearRangeContainer}>
-            <Text style={styles.clearRangeText}>Clear Range</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <TouchableView onPress={this.props.onClose} style={styles.clearRangeContainer}>
+            <Text style={styles.clearRangeText}>Close</Text>
           </TouchableView>
-        }
+          {this.isRange &&
+            <TouchableView onPress={this._handleClearRange} style={styles.clearRangeContainer}>
+              <Text style={styles.clearRangeText}>Clear Range</Text>
+            </TouchableView>
+          }
+        </View>
       </View>
     );
   }
@@ -348,6 +355,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
+    flex: 1,
   },
   clearRangeText: {
     flex: 1,
