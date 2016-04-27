@@ -12,6 +12,7 @@ const DAY_NAMES = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
 
 class Calendar extends Component {
   static propTypes = {
+    closeText: React.PropTypes.string,
     date: React.PropTypes.oneOfType([
       React.PropTypes.instanceOf(Date),
       React.PropTypes.instanceOf(moment),
@@ -23,6 +24,7 @@ class Calendar extends Component {
   };
 
   static defaultProps = {
+    closeText: 'Close',
     date: moment(),
     selectionType: SINGLE,
     onClose: () => true,
@@ -106,7 +108,7 @@ class Calendar extends Component {
         ))}
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TouchableView onPress={this.props.onClose} style={styles.clearRangeContainer}>
-            <Text style={styles.clearRangeText}>Close</Text>
+            <Text style={styles.clearRangeText}>{this.props.closeText}</Text>
           </TouchableView>
           {this.isRange &&
             <TouchableView onPress={this._handleClearRange} style={styles.clearRangeContainer}>
