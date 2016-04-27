@@ -17,7 +17,7 @@ class CalendarRangePicker extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Calendar selectionType="range" date={{ min: new moment().year(2016).month(1).date(3), max: new moment().year(2016).month(1).date(9)}}/>
+        <Calendar closeText={this.props.closeText} selectionType="range" date={{ min: new moment().year(2016).month(1).date(3), max: new moment().year(2016).month(1).date(9)}}/>
       </View>
     );
   }
