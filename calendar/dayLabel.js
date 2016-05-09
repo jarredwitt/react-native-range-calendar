@@ -1,14 +1,11 @@
-import React, { Component, View, Text, StyleSheet } from 'react-native';
+import React, { PropTypes } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
-class CalendarDayLabel extends Component {
-  render() {
-    return (
-      <View style={styles.labelContainer}>
-        <Text style={styles.label}>{this.props.day}</Text>
-      </View>
-    );
-  }
-}
+const CalendarDayLabel = (props) => (
+  <View style={styles.labelContainer}>
+    <Text style={styles.label}>{props.day}</Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   labelContainer: {

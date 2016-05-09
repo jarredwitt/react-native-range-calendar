@@ -1,4 +1,5 @@
-import React, { Component, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { Component, PropTypes } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import moment from 'moment';
 
 import { TouchableView } from './helpers';
@@ -15,6 +16,9 @@ class CalendarDay extends Component {
     onDatePress: () => false,
   };
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.selected !== this.props.selected || (nextProps.day && !nextProps.day.isSame(this.props.day, 'day'));
+  }
   render() {
     let day = this.props.day ? this.props.day.date() : ' ';
     let style = [styles.day];

@@ -1,10 +1,11 @@
-import React, { Component, View, TouchableOpacity } from 'react-native';
+import React, { Component, PropTypes } from 'react';
+import { View, TouchableOpacity } from 'react-native';
 
 class TouchableView extends Component {
   static propTypes = {
     style: View.propTypes.style,
     viewStyle: View.propTypes.style,
-    onPress: React.PropTypes.func,
+    onPress: PropTypes.func,
   };
 
   static defaultProps = {

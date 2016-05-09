@@ -1,9 +1,13 @@
-import React, { Component, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { Component, PropTypes } from 'react';
+import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import moment from 'moment';
 
 import { TouchableView } from './helpers';
 import CalendarDay from './day';
 import CalendarDayLabel from './dayLabel';
+
+import chevronLeft from '../assets/chevronLeft.png';
+import chevronRight from '../assets/chevronRight.png';
 
 const RANGE = 'range';
 const SINGLE = 'single';
@@ -12,18 +16,20 @@ const DAY_NAMES = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
 
 class Calendar extends Component {
   static propTypes = {
-    closeText: React.PropTypes.string,
-    date: React.PropTypes.oneOfType([
-      React.PropTypes.instanceOf(Date),
-      React.PropTypes.instanceOf(moment),
-      React.PropTypes.object,
+    clearText: PropTypes.string,
+    closeText: PropTypes.string,
+    date: PropTypes.oneOfType([
+      PropTypes.instanceOf(Date),
+      PropTypes.instanceOf(moment),
+      PropTypes.object,
     ]),
-    selectionType: React.PropTypes.oneOf([RANGE, SINGLE]),
-    onClose: React.PropTypes.func,
-    onDateChange: React.PropTypes.func,
+    selectionType: PropTypes.oneOf([RANGE, SINGLE]),
+    onClose: PropTypes.func,
+    onDateChange: PropTypes.func,
   };
 
   static defaultProps = {
+    clearText: 'Clear Range',
     closeText: 'Close',
     date: moment(),
     selectionType: SINGLE,
@@ -85,7 +91,7 @@ class Calendar extends Component {
       <View style={styles.calendarContainer}>
         <View style={styles.calendarTopContainer}>
           <TouchableView style={styles.calendarTopPrevContainer} onPress={this._handlePrevPress}>
-            <Text style={styles.calendarTopPrevText}>Prev</Text>
+            <Image source={chevronLeft} style={{ height: 15, width: 27 }} resizeMode="contain" />
           </TouchableView>
           <View style={styles.calendarTopMonthYearContainer}>
             <Text style={styles.calendarTopMonthYearText}>
@@ -93,7 +99,7 @@ class Calendar extends Component {
             </Text>
           </View>
           <TouchableView style={styles.calendarTopNextContainer} onPress={this._handleNextPress}>
-            <Text style={styles.calendarTopNextText}>Next</Text>
+            <Image source={chevronRight} style={{ height: 15, width: 27 }} resizeMode="contain" />
           </TouchableView>
         </View>
         <View style={styles.calendarDayLabelContainer}>
@@ -107,14 +113,14 @@ class Calendar extends Component {
           </View>
         ))}
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          {this.isRange &&
+            <TouchableView onPress={this._handleClearRange} style={styles.clearRangeContainer}>
+              <Text style={styles.clearRangeText}>{this.props.clearText}</Text>
+            </TouchableView>
+          }
           <TouchableView onPress={this.props.onClose} style={styles.clearRangeContainer}>
             <Text style={styles.clearRangeText}>{this.props.closeText}</Text>
           </TouchableView>
-          {this.isRange &&
-            <TouchableView onPress={this._handleClearRange} style={styles.clearRangeContainer}>
-              <Text style={styles.clearRangeText}>Clear Range</Text>
-            </TouchableView>
-          }
         </View>
       </View>
     );
